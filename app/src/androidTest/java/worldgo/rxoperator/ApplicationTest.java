@@ -1,4 +1,4 @@
-package zhou.com.rxjavademo;
+package worldgo.rxoperator;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
