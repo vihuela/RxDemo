@@ -22,8 +22,8 @@ public class Repeat extends BaseOperate<Integer> {
                 subscriber.onCompleted();
             }
         })
-                .repeat(3)//onCompleted之前的流程走3遍
-                .repeatWhen(new Func1<Observable<? extends Void>, Observable<?>>() {//重复条件
+               /* .repeat(3)*///onCompleted之前的流程走3遍
+                .repeatWhen(new Func1<Observable<? extends Void>, Observable<?>>() {//有条件的重新订阅和发射原来的Observable
                     @Override
                     public Observable<?> call(Observable<? extends Void> observable) {
                         return Observable.timer(2, TimeUnit.SECONDS);
