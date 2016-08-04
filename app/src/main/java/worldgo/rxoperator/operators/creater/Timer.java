@@ -13,6 +13,6 @@ public class Timer extends BaseOperate<Object> {
     @Override
     protected void invoke() {
         //创建一个Observable，它在一个给定的延迟后发射一个特殊的值。
-        Observable.just(1).timer(2, TimeUnit.SECONDS).subscribe(action1);
+        Observable.timer(2, TimeUnit.SECONDS).subscribe(action1);
     }
 }

@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import worldgo.rxoperator.operators.BaseOperate;
 
@@ -28,6 +29,6 @@ public class Repeat extends BaseOperate<Integer> {
                     public Observable<?> call(Observable<? extends Void> observable) {
                         return Observable.timer(2, TimeUnit.SECONDS);
                     }
-                }).subscribe(subscriber);
+                }).observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
     }
 }

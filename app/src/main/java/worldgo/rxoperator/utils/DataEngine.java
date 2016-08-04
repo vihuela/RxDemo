@@ -16,13 +16,18 @@ import worldgo.rxoperator.operators.creater.Repeat;
 import worldgo.rxoperator.operators.creater.Start;
 import worldgo.rxoperator.operators.creater.Throw;
 import worldgo.rxoperator.operators.creater.Timer;
+import worldgo.rxoperator.operators.filter.Debounce;
+import worldgo.rxoperator.operators.filter.Distinct;
+import worldgo.rxoperator.operators.test.RepeatTest;
 import worldgo.rxoperator.operators.transform.Buffer;
 import worldgo.rxoperator.operators.transform.ConcatMap;
 import worldgo.rxoperator.operators.transform.FlatMap;
 import worldgo.rxoperator.operators.transform.FlatMapIterable;
 import worldgo.rxoperator.operators.transform.GroupBy;
 import worldgo.rxoperator.operators.transform.Map;
+import worldgo.rxoperator.operators.transform.Scan;
 import worldgo.rxoperator.operators.transform.SwitchMap;
+import worldgo.rxoperator.operators.transform.Window;
 
 /**
  * @author ricky.yao on 2016/7/28.
@@ -46,6 +51,8 @@ public class DataEngine {
         List<Catalog> subCatalogs = new ArrayList<>();
         subCatalogs.add(getCreate());
         subCatalogs.add(getTransForm());
+        subCatalogs.add(getFilter());
+        subCatalogs.add(getTest());
         return subCatalogs;
     }
 
@@ -64,8 +71,8 @@ public class DataEngine {
                 new Catalog.SubCatalog("Just", new Event(Just.class, "invoke", null)),
                 new Catalog.SubCatalog("Range", new Event(Range.class, "invoke", null)),
                 new Catalog.SubCatalog("Repeat", new Event(Repeat.class, "invoke", null)),
-                new Catalog.SubCatalog("Start(Todo)", new Event(Start.class, "invoke", null)),
-                new Catalog.SubCatalog("Timer", new Event(Timer.class, "invoke", null))
+                new Catalog.SubCatalog("Timer", new Event(Timer.class, "invoke", null)),
+                new Catalog.SubCatalog("Start(Todo)", new Event(Start.class, "invoke", null))
         );
         return new Catalog("创建操作", catalogList);
     }
@@ -83,9 +90,43 @@ public class DataEngine {
                 new Catalog.SubCatalog("SwitchMap", new Event(SwitchMap.class, "invoke", null)),
                 new Catalog.SubCatalog("GroupBy", new Event(GroupBy.class, "invoke", null)),
                 new Catalog.SubCatalog("Map", new Event(Map.class, "invoke", null)),
-                new Catalog.SubCatalog("Scan", new Event(Throw.class, "invoke", null)),
-                new Catalog.SubCatalog("Window", new Event(Interval.class, "invoke", null))
+                new Catalog.SubCatalog("Scan", new Event(Scan.class, "invoke", null)),
+                new Catalog.SubCatalog("Window(TODO)", new Event(Window.class, "invoke", null))
         );
         return new Catalog("变换操作", catalogList);
+    }
+
+    /**
+     * 过滤操作
+     */
+    private static Catalog getFilter() {
+        List<Catalog.SubCatalog> catalogList = new ArrayList<>();
+        Collections.addAll(catalogList,
+                new Catalog.SubCatalog("Debounce", new Event(Debounce.class, "invoke", null)),
+                new Catalog.SubCatalog("Distinct", new Event(Distinct.class, "invoke", null)),
+                new Catalog.SubCatalog("ElementAt", new Event(FlatMapIterable.class, "invoke", null)),
+                new Catalog.SubCatalog("Filter", new Event(ConcatMap.class, "invoke", null)),
+                new Catalog.SubCatalog("First", new Event(SwitchMap.class, "invoke", null)),
+                new Catalog.SubCatalog("IgnoreElements", new Event(GroupBy.class, "invoke", null)),
+                new Catalog.SubCatalog("Last", new Event(Map.class, "invoke", null)),
+                new Catalog.SubCatalog("Sample", new Event(Scan.class, "invoke", null)),
+                new Catalog.SubCatalog("Skip", new Event(Window.class, "invoke", null)),
+                new Catalog.SubCatalog("SkipLast", new Event(Window.class, "invoke", null)),
+                new Catalog.SubCatalog("Take", new Event(Window.class, "invoke", null)),
+                new Catalog.SubCatalog("TakeLast", new Event(Window.class, "invoke", null))
+        );
+        return new Catalog("过滤操作", catalogList);
+
+    }
+
+    /**
+     * 测试操作
+     */
+    private static Catalog getTest() {
+        List<Catalog.SubCatalog> catalogList = new ArrayList<>();
+        Collections.addAll(catalogList,
+                new Catalog.SubCatalog("Repeat", new Event(RepeatTest.class, "invoke", null))
+        );
+        return new Catalog("测试操作", catalogList);
     }
 }
