@@ -5,6 +5,13 @@ import java.util.Collections;
 import java.util.List;
 
 import worldgo.rxoperator.model.Catalog;
+import worldgo.rxoperator.operators.combination.AndThenWhen;
+import worldgo.rxoperator.operators.combination.CombineLatest;
+import worldgo.rxoperator.operators.combination.Join;
+import worldgo.rxoperator.operators.combination.Merge;
+import worldgo.rxoperator.operators.combination.StartWith;
+import worldgo.rxoperator.operators.combination.Switch;
+import worldgo.rxoperator.operators.combination.Zip;
 import worldgo.rxoperator.operators.creater.Create;
 import worldgo.rxoperator.operators.creater.Defer;
 import worldgo.rxoperator.operators.creater.Empty;
@@ -18,6 +25,16 @@ import worldgo.rxoperator.operators.creater.Throw;
 import worldgo.rxoperator.operators.creater.Timer;
 import worldgo.rxoperator.operators.filter.Debounce;
 import worldgo.rxoperator.operators.filter.Distinct;
+import worldgo.rxoperator.operators.filter.DistinctUntilChanged;
+import worldgo.rxoperator.operators.filter.ElementAt;
+import worldgo.rxoperator.operators.filter.Filter;
+import worldgo.rxoperator.operators.filter.First;
+import worldgo.rxoperator.operators.filter.IgnoreElements;
+import worldgo.rxoperator.operators.filter.Last;
+import worldgo.rxoperator.operators.filter.Sample;
+import worldgo.rxoperator.operators.filter.Skip;
+import worldgo.rxoperator.operators.filter.Take;
+import worldgo.rxoperator.operators.filter.ThrottleWithTimeOut;
 import worldgo.rxoperator.operators.test.RepeatTest;
 import worldgo.rxoperator.operators.transform.Buffer;
 import worldgo.rxoperator.operators.transform.ConcatMap;
@@ -52,6 +69,7 @@ public class DataEngine {
         subCatalogs.add(getCreate());
         subCatalogs.add(getTransForm());
         subCatalogs.add(getFilter());
+        subCatalogs.add(getCombination());
         subCatalogs.add(getTest());
         return subCatalogs;
     }
@@ -103,20 +121,37 @@ public class DataEngine {
         List<Catalog.SubCatalog> catalogList = new ArrayList<>();
         Collections.addAll(catalogList,
                 new Catalog.SubCatalog("Debounce", new Event(Debounce.class, "invoke", null)),
+                new Catalog.SubCatalog("ThrottleWithTimeOut", new Event(ThrottleWithTimeOut.class, "invoke", null)),
                 new Catalog.SubCatalog("Distinct", new Event(Distinct.class, "invoke", null)),
-                new Catalog.SubCatalog("ElementAt", new Event(FlatMapIterable.class, "invoke", null)),
-                new Catalog.SubCatalog("Filter", new Event(ConcatMap.class, "invoke", null)),
-                new Catalog.SubCatalog("First", new Event(SwitchMap.class, "invoke", null)),
-                new Catalog.SubCatalog("IgnoreElements", new Event(GroupBy.class, "invoke", null)),
-                new Catalog.SubCatalog("Last", new Event(Map.class, "invoke", null)),
-                new Catalog.SubCatalog("Sample", new Event(Scan.class, "invoke", null)),
-                new Catalog.SubCatalog("Skip", new Event(Window.class, "invoke", null)),
-                new Catalog.SubCatalog("SkipLast", new Event(Window.class, "invoke", null)),
-                new Catalog.SubCatalog("Take", new Event(Window.class, "invoke", null)),
-                new Catalog.SubCatalog("TakeLast", new Event(Window.class, "invoke", null))
+                new Catalog.SubCatalog("DistinctUntilChanged", new Event(DistinctUntilChanged.class, "invoke", null)),
+                new Catalog.SubCatalog("ElementAt", new Event(ElementAt.class, "invoke", null)),
+                new Catalog.SubCatalog("Filter", new Event(Filter.class, "invoke", null)),
+                new Catalog.SubCatalog("First", new Event(First.class, "invoke", null)),
+                new Catalog.SubCatalog("IgnoreElements", new Event(IgnoreElements.class, "invoke", null)),
+                new Catalog.SubCatalog("Last", new Event(Last.class, "invoke", null)),
+                new Catalog.SubCatalog("Sample", new Event(Sample.class, "invoke", null)),
+                new Catalog.SubCatalog("Skip", new Event(Skip.class, "invoke", null)),
+                new Catalog.SubCatalog("Take", new Event(Take.class, "invoke", null))
         );
         return new Catalog("过滤操作", catalogList);
 
+    }
+
+    /**
+     * 组合操作
+     */
+    private static Catalog getCombination() {
+        List<Catalog.SubCatalog> catalogList = new ArrayList<>();
+        Collections.addAll(catalogList,
+                new Catalog.SubCatalog("And/Then/When", new Event(AndThenWhen.class, "invoke", null)),
+                new Catalog.SubCatalog("CombineLatest", new Event(CombineLatest.class, "invoke", null)),
+                new Catalog.SubCatalog("Join", new Event(Join.class, "invoke", null)),
+                new Catalog.SubCatalog("Merge", new Event(Merge.class, "invoke", null)),
+                new Catalog.SubCatalog("StartWith", new Event(StartWith.class, "invoke", null)),
+                new Catalog.SubCatalog("Switch", new Event(Switch.class, "invoke", null)),
+                new Catalog.SubCatalog("Zip", new Event(Zip.class, "invoke", null))
+        );
+        return new Catalog("组合操作", catalogList);
     }
 
     /**
