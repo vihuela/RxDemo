@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import worldgo.rxoperator.model.Catalog;
-import worldgo.rxoperator.operators.combination.AndThenWhen;
 import worldgo.rxoperator.operators.combination.CombineLatest;
 import worldgo.rxoperator.operators.combination.Join;
 import worldgo.rxoperator.operators.combination.Merge;
@@ -143,9 +142,8 @@ public class DataEngine {
     private static Catalog getCombination() {
         List<Catalog.SubCatalog> catalogList = new ArrayList<>();
         Collections.addAll(catalogList,
-                new Catalog.SubCatalog("And/Then/When", new Event(AndThenWhen.class, "invoke", null)),
                 new Catalog.SubCatalog("CombineLatest", new Event(CombineLatest.class, "invoke", null)),
-                new Catalog.SubCatalog("Join", new Event(Join.class, "invoke", null)),
+                new Catalog.SubCatalog("Join（TODO）", new Event(Join.class, "invoke", null)),
                 new Catalog.SubCatalog("Merge", new Event(Merge.class, "invoke", null)),
                 new Catalog.SubCatalog("StartWith", new Event(StartWith.class, "invoke", null)),
                 new Catalog.SubCatalog("Switch", new Event(Switch.class, "invoke", null)),

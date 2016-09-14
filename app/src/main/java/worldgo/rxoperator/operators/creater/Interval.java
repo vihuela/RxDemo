@@ -17,6 +17,6 @@ public class Interval extends BaseOperate<Object> {
     @Override
     protected void invoke() {
         //创建一个按固定时间间隔发射整数序列的Observable
-        Observable.interval(2, 1, TimeUnit.SECONDS).subscribe(subscriber);
+        Observable.interval(2, 1, TimeUnit.SECONDS).take(5).subscribe(subscriber);
     }
 }
