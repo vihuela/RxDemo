@@ -6,7 +6,7 @@ Copyright (c) 2016. WorldGo Technology Co., Ltd
 ![](http://i.imgur.com/gMmh6RR.png)
 
 ## Demo框架 ##
-> 采用委托代理，便于修改
+> 采用委托代理，便于修改，请查看：DataEngine.java
 
 	/**
      * 创建操作
